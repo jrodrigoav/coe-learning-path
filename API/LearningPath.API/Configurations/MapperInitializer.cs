@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using LearningPath.API.Models;
+using LearningPath.API.DTO;
 using Microsoft.TeamFoundation.WorkItemTracking.WebApi.Models;
 
 namespace LearningPath.API.Configurations
@@ -9,7 +9,7 @@ namespace LearningPath.API.Configurations
         public MapperInitializer() 
         { 
            
-            CreateMap<WorkItem, WorkItemFromJson>().ReverseMap();
+            CreateMap<WorkItem, WorkItemDTO>().ReverseMap();
         }
     }
 }
