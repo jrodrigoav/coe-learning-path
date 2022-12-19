@@ -1,0 +1,44 @@
+<div>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">
+          ID
+        </th>
+        <th scope="col">
+          Work Item
+        </th>
+        <th scope="col">
+          Assigned To
+        </th>
+        <th scope="col">
+          Date
+        </th>
+        <th scope="col">
+          Status
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let witem of workItemsList">
+        <td>
+          {{ witem.id }}
+        </td>
+        <td>
+          {{ witem.title }}
+        </td>
+        <td>
+          {{ witem.assignedTo }}
+        </td>
+        <td>
+          {{ witem.changedDate }}
+        </td>
+        <td>
+          {{ witem.changedDate }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+

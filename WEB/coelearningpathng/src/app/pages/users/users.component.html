@@ -1,0 +1,16 @@
+<div>
+  <form (ngSubmit)="onSubmit" [formGroup] = "form">
+    <select formControlName="listUsers" >
+      <option [ngValue]="null" disabled>Select User</option>
+      <option *ngFor="let userName of usersList" [ngValue]="userName">{{ userName }}</option>
+    </select>
+
+    <input type="text" formControlName="userName">
+    <button type="submit">Search</button>
+  </form>
+
+
+</div>
+
+
+
