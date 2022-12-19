@@ -1,7 +1,9 @@
 <app-navigation>
 </app-navigation>
-<app-users [usersList] = "filteredUsersList">
+<router-outlet></router-outlet>
+<app-users
+  [usersList] = "filteredUsersList"
+  (editUserName)="handleEdit($event)">
 </app-users>
 <app-workitemslist [workItemsList] = "workItems">
 </app-workitemslist>
-<router-outlet></router-outlet>

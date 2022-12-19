@@ -40,9 +40,10 @@ export class AppComponent implements OnInit {
       error: (e) => console.error(e)
     });
 
-
-
   }
 
+  handleEdit(event: any) {
+    console.log('emmited from child '+ event);
+  }
 
 }
