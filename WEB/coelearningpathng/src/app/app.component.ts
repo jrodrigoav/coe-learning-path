@@ -1,9 +1,5 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { of  } from 'rxjs';
-import { distinct } from 'rxjs/operators';
 import { adoworkitem } from './model/adoworkitem.interface';
-import { WorkitemslistComponent } from './pages/workitemslist/workitemslist.component';
 import { AzuredevopsWorkitemsService } from './services/azuredevops-workitems.service';
 
 @Component({
@@ -29,6 +25,7 @@ export class AppComponent implements OnInit {
       next: (data) => {
         this.workItems = data;
 
+        this.generateStatus();
         //Value: value array from map
         //index, index iteration from array mapped
         //self, array mapped
@@ -42,8 +39,34 @@ export class AppComponent implements OnInit {
 
   }
 
+  generateStatus(){
+
+    this.workItems.forEach(wi => {
+      let milisec: number;
+      let todayDate = new Date();
+      let otherDate = new Date(wi.changedDate);
+      milisec = todayDate.getTime() - otherDate.getTime();
+
+      if (milisec < 64800000) //18 hrs
+      {
+        wi.statusClass = 'normal'
+      } else if (milisec < 129600000) //36 hrs
+      {
+        wi.statusClass = 'warning'
+      }
+
+    });
+  }
+
   handleEdit(event: any) {
-    console.log('emmited from child '+ event);
+
+    if(event !== '') {
+      this.workItems = this.workItems
+      .filter((value, index, self) => value.assignedTo.includes(event));
+
+    } else {
+      this.retrieveWorkItems();
+    }
   }
 
 }

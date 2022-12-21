@@ -3,4 +3,5 @@ export interface adoworkitem {
   title: string;
   assignedTo: string;
   changedDate: Date;
+  statusClass: string;
 }

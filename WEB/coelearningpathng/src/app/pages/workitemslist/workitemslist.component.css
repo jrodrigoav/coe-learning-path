@@ -1,3 +1,21 @@
 div {
   margin: 1rem 3rem 1rem 3rem;
 }
+
+.status {
+  width: 10px;
+  height: 10px;
+  background: #c0392b;
+  display: block;
+  margin: 8px 10px 0 0;
+  float: left;
+  border-radius: 50%;
+}
+
+.status.normal {
+  background: #2ecc71;
+}
+
+.status.warning {
+  background: #FDFF33;
+}

@@ -12,10 +12,10 @@
           Assigned To
         </th>
         <th scope="col">
-          Date
+          Status
         </th>
         <th scope="col">
-          Status
+          Date
         </th>
       </tr>
     </thead>
@@ -31,10 +31,10 @@
           {{ witem.assignedTo }}
         </td>
         <td>
-          {{ witem.changedDate }}
+          <span class="status {{ witem.statusClass }}" ></span>
         </td>
         <td>
-          {{ witem.changedDate }}
+          {{ witem.changedDate | date:'medium'}}
         </td>
       </tr>
     </tbody>
