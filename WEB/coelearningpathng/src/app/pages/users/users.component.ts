@@ -1,13 +1,12 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
-import { adoworkitem } from 'src/app/model/adoworkitem.interface';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.css']
 })
-export class UsersComponent {
+export class UsersComponent implements OnInit {
 
   @Input()
   usersList: string[] = [];
@@ -16,40 +15,64 @@ export class UsersComponent {
   @Output()
   editUserName: EventEmitter<any> = new EventEmitter<any>();
 
-  editing: boolean = false;
-
-  form = new FormGroup({
-    listUsers: new FormControl(),
-    userName: new FormControl()
-  });
-
-  onSubmit() {
+  /**
+   * Injecting the reactive forms module instead of using "new"
+   */
+  constructor(private fb: FormBuilder) {
 
   }
 
-    userChanged(e: any){
-      this.form.get('userName')?.setValue(e.target?.value, {
-        onlySelf: true
-      });
 
-      this.updateGridResults(this.userName);
-      console.log(this.userName);
-    }
+  userForm = this.fb.group({
+    listUsers: ['-1'] ,
+    userName: ['', [Validators.required]]
+  });
+
+  ngOnInit() {
+    //To trigger an event when the input username changes
+    this.userForm.controls["userName"]
+              .valueChanges.subscribe((value) => {
+                    // called everytime when form control value is updated
+
+                    this.nameEdited = (this.userName?.value) ? this.userName!.value : '';
+                    this.onNameChange(this.nameEdited);
+                 });
+  }
+
+  onSubmit() {
+    console.log('name from submit ', this.nameEdited);
+    this.editUserName.emit(this.nameEdited);
+  }
+
+  //Event from the select control
+  userChanged(e: any){
+
+    this.nameEdited = this.formatUserName(e.target?.value);
+    console.log('name from select ', this.nameEdited);
+    this.editUserName.emit(this.nameEdited);
+  }
 
      // Access formcontrols getter
   get userName() {
-    let user: string = '';
-    user = this.form.get('userName')?.value;
-     //To extract the name after the index number
-    user = user.substring(user.indexOf(':') + 1)
-    return user;
+     return this.userForm.get('userName');
   }
 
-    updateGridResults(userName: string) {
+  formatUserName(rawName: string) {
+    let user: string;
 
-    }
-    onNameChange(userName: string) {
+     //To extract the name after the index number
+    user = rawName.substring(rawName.indexOf(':') + 1)
+    return user.trim();
+  }
+
+  get listUsers(){
+    return this.userForm.get("listUsers");
+  }
+
+  onNameChange(userName: string) {
+    if (userName.length > 3) {
       this.editUserName.emit(userName);
     }
+  }
 
 };
