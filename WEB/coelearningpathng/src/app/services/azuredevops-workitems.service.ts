@@ -21,5 +21,10 @@ export class AzuredevopsWorkitemsService {
       return this.http.get<adoworkitem[]>(url);
     }
 
+    getAllHistoric(): Observable<adoworkitem[]> {
+      let url = WEBSERVICE_API + 'getlegacycommitedworkitems';
+      return this.http.get<adoworkitem[]>(url);
+    }
+
 
 }

@@ -20,5 +20,13 @@ namespace LearningPath.API.Controllers
 
             return Ok(workItems);
         }
+
+        [HttpGet("getlegacycommitedworkitems")]
+        public async Task<IActionResult> GetLegacyCommitedWorkItems()
+        {
+            var workItems = await _azureDevopsService.GetLegacyCommitedWorkItems();
+
+            return Ok(workItems);
+        }
     }
 }

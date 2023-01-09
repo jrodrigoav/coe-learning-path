@@ -1,6 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { adoworkitem } from './model/adoworkitem.interface';
-import { AzuredevopsWorkitemsService } from './services/azuredevops-workitems.service';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',

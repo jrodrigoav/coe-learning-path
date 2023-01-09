@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { adoworkitem } from 'src/app/model/adoworkitem.interface';
 import { AzuredevopsWorkitemsService } from 'src/app/services/azuredevops-workitems.service';
 
@@ -13,17 +14,43 @@ export class HomeComponent implements OnInit {
   workItems: adoworkitem[] = [];
   originalWorkItems: adoworkitem[] = [];
   filteredUsersList: string[] = [];
+  getHistoric: boolean = false;
 
-  constructor(private workItemService: AzuredevopsWorkitemsService  ) {}
+  constructor(private workItemService: AzuredevopsWorkitemsService,
+    private route: ActivatedRoute ) {}
 
   ngOnInit() {
 
-    this.retrieveWorkItems();
+      this.retrieveWorkItems();
   }
 
   retrieveWorkItems(): void {
     this.workItemService
     .getAll()
+    .subscribe({
+      next: (data) => {
+        this.originalWorkItems = data;
+        this.workItems = this.originalWorkItems;
+
+        this.generateStatus();
+        //Value: value array from map
+        //index, index iteration from array mapped
+        //self, array mapped
+        //index of: first index of the instance of a value
+        this.filteredUsersList = this.workItems
+        .map(function(wi) {return wi.assignedTo;})
+        .filter((value, index, self) => self.indexOf(value) === index);
+
+        this.filteredUsersList.push('Get all list');
+      },
+      error: (e) => console.error(e)
+    });
+
+  }
+
+  retrieveHistoricWorkItems(): void {
+    this.workItemService
+    .getAllHistoric()
     .subscribe({
       next: (data) => {
         this.originalWorkItems = data;
@@ -67,10 +94,10 @@ export class HomeComponent implements OnInit {
   handleEdit(event: any) {
     if(event === 'Get all list' || event === undefined){
 
-      this.retrieveWorkItems();
+      this.refreshWorkItems(this.getHistoric);
 
     } else if(event !== '') {
-      
+
       this.workItems = this.originalWorkItems;
       this.workItems = this.workItems
       .filter((value, index, self) => value.assignedTo.includes(event));
@@ -79,6 +106,18 @@ export class HomeComponent implements OnInit {
         this.workItems = this.originalWorkItems;
       }
       console.log('Value emmited ', event.value)
+    }
+  }
+
+  refreshWorkItems(historic: boolean) {
+
+      this.getHistoric = historic;
+
+    if (this.getHistoric)
+    {
+      this.retrieveHistoricWorkItems();
+    } else {
+      this.retrieveWorkItems();
     }
   }
 }

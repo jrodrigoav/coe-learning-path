@@ -7,11 +7,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
+import { UsersComponent } from './components/users/users.component';
+import { WorkitemslistComponent } from './components/workitemslist/workitemslist.component';
 import { HomeComponent } from './pages/home/home.component';
 import { AboutComponent } from './pages/about/about.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
-import { UsersComponent } from './pages/users/users.component';
-import { WorkitemslistComponent } from './pages/workitemslist/workitemslist.component';
 import { LoginComponent } from './pages/login/login.component';
 import { ToastrModule } from 'ngx-toastr';
 
@@ -24,7 +24,7 @@ import { ToastrModule } from 'ngx-toastr';
     PageNotFoundComponent,
     UsersComponent,
     WorkitemslistComponent,
-    LoginComponent
+    LoginComponent,
   ],
   imports: [
     BrowserModule,

@@ -2,9 +2,21 @@
   <h1>Work Items List</h1>
 </div>
 
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link" data-bs-toggle="tab" (click)="refreshWorkItems(false)" aria-current="page">Active Work Items</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" data-bs-toggle="tab" (click)="refreshWorkItems(true)">All Time Work Items</a>
+  </li>
+</ul>
+
 <app-users
   [usersList] = "filteredUsersList"
   (editUserName)="handleEdit($event)">
 </app-users>
-<app-workitemslist [workItemsList] = "workItems">
+<app-workitemslist
+  [workItemsList] = "workItems">
 </app-workitemslist>
+
+

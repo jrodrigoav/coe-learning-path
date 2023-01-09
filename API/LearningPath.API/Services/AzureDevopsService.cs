@@ -45,5 +45,24 @@ namespace LearningPath.API.Services
 
         }
 
+        public async Task<List<WorkItemDTO>> GetLegacyCommitedWorkItems()
+        {
+            List<WorkItemDTO> workItemsFromJson = new List<WorkItemDTO>();
+          
+            var wiql = new Wiql
+            {
+                Query = "SELECT [System.Id] From WorkItems Where [System.WorkItemType] = 'Product Backlog Item' " +
+                    "AND [State] = 'Committed' AND [System.CreatedDate] >= @StartOfDay('-360d')"
+            };
+
+            var queryResult = await _witClient.QueryByWiqlAsync(wiql);
+            var workItemIds = queryResult.WorkItems.Select(s => s.Id).ToList();
+            var workItems = await _witClient.GetWorkItemsAsync(workItemIds);
+            workItems = workItems ?? new List<WorkItem>();
+
+            return workItems.Select(wi => new WorkItemDTO(wi)).ToList();
+
+        }
+
     }
 }

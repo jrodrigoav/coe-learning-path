@@ -1,0 +1,12 @@
+<div class="container">
+  <form [formGroup]="userForm">
+    <div class="d-flex flex-row">
+      <div class="p-2">
+        <select class="form-select" formControlName="listUsers" (change)="userChanged($event)">
+          <option disabled [ngValue]="null">Select User</option>
+          <option *ngFor="let userName of usersList" [ngValue]="userName">{{ userName }}</option>
+        </select>
+      </div>
+    </div>
+  </form>
+</div>
